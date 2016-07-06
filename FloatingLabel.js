@@ -43,18 +43,22 @@ class FloatingLabel extends Textbox {
         textboxStyle = stylesheet.textbox.notEditable;
       }
       const help = locals.help ? <Text style={helpBlockStyle}>{locals.help}</Text> : null;
-      const error = locals.hasError && locals.error ? <Text style={errorBlockStyle}>{locals.error}</Text> : null;
-      const label =
-        <Animated.Text style={[controlLabelStyle, {
+
+      let label;
+      if (locals.hasError && locals.error) {
+        label = <Text style={errorBlockStyle}>{locals.error}</Text>
+      } else {
+        label = <Animated.Text style={[controlLabelStyle, {
           opacity: self.state.fadeAnim,
           transform: [{
             translateY: self.state.fadeAnim.interpolate({
               inputRange: [0, 1],
               outputRange: [10, 0]
-            }),
+            })
           }]}]}>
           {locals.label}
         </Animated.Text>
+      }
 
       const placeholderString = (self.state.fieldFocused) ? '' : self.state.placeholderString || locals.label;
       return (
@@ -101,7 +105,6 @@ class FloatingLabel extends Textbox {
               value={locals.value}
             />
             {help}
-            {error}
           </View>
         </TouchableWithoutFeedback>
       )
