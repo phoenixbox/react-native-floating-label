@@ -17,7 +17,7 @@ class FloatingLabel extends Textbox {
     this.state = {
       fieldFocused: (props.value) ? true : false,
       value: (props.value) ? String(props.value) : undefined,
-      fadeAnim: (props.value) ? new Animated.Value(1) : new Animated.Value(0),
+      fadeAnim: (props.options.value) ? new Animated.Value(1) : new Animated.Value(0),
       placeholderString: undefined,
     };
   }
@@ -26,7 +26,7 @@ class FloatingLabel extends Textbox {
     let self = this
     return function (locals) {
       const stylesheet = locals.stylesheet;
-      let formGroupStyle = stylesheet.formGroup.normal;
+      let formGroupStyle = self.state.fieldFocused ? stylesheet.formGroup.focus : stylesheet.formGroup.normal;
       let controlLabelStyle = stylesheet.controlLabel.normal;
       let textboxStyle = stylesheet.textbox.normal;
       let helpBlockStyle = stylesheet.helpBlock.normal;
